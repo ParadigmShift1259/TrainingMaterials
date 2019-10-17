@@ -1,0 +1,227 @@
+---------------------------------------------------------------------------------------------------
+Team 1259 Paradigm Shift
+Intro to C++
+
+A crash (no pun intended) course in the basics.
+
+There is quite a bit (again, no pun intended) more to it, but this should get you started.
+
+---------------------------------------------------------------------------------------------------
+Why C++?
+
+Team 1259 was using Java up unitl? 2014?
+Java, like many languages has a similar syntax to C/C++
+C++ performs better (more on this later)
+---------------------------------------------------------------------------------------------------
+Where did C++ come from?
+
+The C language was developed by Dennis Ritchie between 1969 and 1973 at Bell Labs
+It was a very low level procedural language, yet was cross platform
+It was the successor to the B language (which came from BCPL or Bon)								
+Bjarne Stroustrup started C++ in 1979 at Bell Labs
+First released in 1985
+Originally called as an extension to C called "C with classes"
+Like C++, many languages were developed for Object Oriented Programming (OOP)
+Now standardized by an international commitee
+The current standard is C++17
+The WPI library used C++11 last year
+
+Footnote BCPL Basic Combined Programming Language
+---------------------------------------------------------------------------------------------------
+Compiled vs Interpreted
+
+The human readable instructions for the computer (source code) cannot be run directly by the computer.
+They need to be transformed into something the computer understands (machine code).
+
+Some languages/environments are interpreted.
+	Each line of the source code file is read, converted to machine code, then executed.
+	This can be slow and inefficient
+Other languages are compiled
+	A special program called a compiler reads the source code and converts it all to machine code
+	The compiled program runs faster because we did the conversion up front
+	The compiler can also apply optimizations because it "sees" more of the code
+There are some languges that try to combine the best of both (Java, C#)
+	The source code is transformed to and lower level intermediate language
+	The intermediate language is compiled on a just in time (JIT) basis when running
+	This helps Java implement "write once run everywhere"
+	
+    22: void SimpleDisassembly()
+    23: {
+00007FF6C1E0D800 40 55                push        rbp  
+00007FF6C1E0D802 57                   push        rdi  
+00007FF6C1E0D803 48 81 EC 48 01 00 00 sub         rsp,148h  
+00007FF6C1E0D80A 48 8D 6C 24 20       lea         rbp,[rsp+20h]  
+00007FF6C1E0D80F 48 8B FC             mov         rdi,rsp  
+00007FF6C1E0D812 B9 52 00 00 00       mov         ecx,52h  
+00007FF6C1E0D817 B8 CC CC CC CC       mov         eax,0CCCCCCCCh  
+00007FF6C1E0D81C F3 AB                rep stos    dword ptr [rdi]  
+    24: 	int a = 5;
+00007FF6C1E0D81E C7 45 04 05 00 00 00 mov         dword ptr [a],5  
+    25: 	int b = 7;
+00007FF6C1E0D825 C7 45 24 07 00 00 00 mov         dword ptr [b],7  
+    26: 	int c = a + b;
+00007FF6C1E0D82C 8B 45 24             mov         eax,dword ptr [b]  
+00007FF6C1E0D82F 8B 4D 04             mov         ecx,dword ptr [a]  
+00007FF6C1E0D832 03 C8                add         ecx,eax  
+00007FF6C1E0D834 8B C1                mov         eax,ecx  
+00007FF6C1E0D836 89 45 44             mov         dword ptr [c],eax  
+    27: 	printf("%d plus %d = %d\n", a, b, c);
+00007FF6C1E0D839 44 8B 4D 44          mov         r9d,dword ptr [c]  
+    27: 	printf("%d plus %d = %d\n", a, b, c);
+00007FF6C1E0D83D 44 8B 45 24          mov         r8d,dword ptr [b]  
+00007FF6C1E0D841 8B 55 04             mov         edx,dword ptr [a]  
+00007FF6C1E0D844 48 8D 0D 1D 13 05 00 lea         rcx,[string "%d plus %d = %d\n" (07FF6C1E5EB68h)]  
+00007FF6C1E0D84B E8 50 D1 FC FF       call        printf (07FF6C1DDA9A0h)  
+    28: }
+
+---------------------------------------------------------------------------------------------------
+What's a library?
+
+Not just a place for books:)
+"If I have seen further it is by standing on the shoulders of giants" -Sir Issac Newton
+Do we write an entire operating system every time we build a robot?
+Libraries are parts of programs that someone else wrote but we can use.
+All of modern software is built on this concept
+FIRST Robotics uses the WPI library so that all the robots can talk to the field management system at competition, as well as keeping the build season short
+WPI is the Worcester Polytechnic Institute in Massachusetts 
+C++ library documentation http://first.wpi.edu/FRC/roborio/release/docs/cpp/
+WPI also maintains a Java library
+---------------------------------------------------------------------------------------------------
+The "Mechanics" of making a C++ Program
+
+Source code files are ASCII text files
+There are 2 main types, C++ files (file extension .cpp) and header files (extension .h)
+Header files are used to define classes and function "signatures"
+C++ files are used to implement the member functions
+Header files are "included" into c++ files as if the compiler did a cut and paste
+Each c++ file is compiled into an object (.obj) file (not the same as an object in OOP)
+The object files are linked together into the final executable (which we download to the robot)
+Libraries (like the WPI lib and the C standard lib) are really just a bunch of object files in one .lib file
+---------------------------------------------------------------------------------------------------
+What's a class?
+
+A group of students?
+No, it is related to classification
+Humans love to classify things
+<image of the tree of life> https://www.all-creatures.org/hope/gw/evolutionary_tree_002.gif
+A class in C++ is an incomplete model of a physical thing or idea
+We focus on the attributes of an object and the processes that affect them
+---------------------------------------------------------------------------------------------------
+What's a class? (continued)
+
+In procedural languages, you pass data into functions
+The OOP idea is to keep data and the functions that manipulate it together
+Classes have data members and member functions
+Data members are also called member variables
+Both types of members can be hidden (private, protected) from the rest of the code
+Classes and structs are the same thing in C++ with different default public/private/protected access
+Classes have 2 special functions
+	A constructor, used to initialise member variables
+	A destructor, used to release resources used by the class
+---------------------------------------------------------------------------------------------------
+What's a class? (continued)
+
+Parts of a class
+Note the double forward slash is a comment in C++, which is ignored by the compiler
+Just as in C, semicolons are used as the end of statement marker
+In the header file (Monkey.h)
+class Monkey
+{								// Open curly brace, required syntax
+public:							// A public access specifier means code outside the class can use it
+	Monkey(int hgt, int wt);	// Note that the constructor must have the same name as the class
+	~Monkey();					// The desturctor pre-pends a tilde character (~)
+	
+	// A member function to feed the Monkey; bn and number are arguments; Banana is another class
+	void Feed(Banana bn, int number);
+	
+private:						// A private access specifier means code outside the class can NOT use it
+	void Eat(Banana bn);		// The Monkey can only eat one banana at a time; private, we can Feed the Monkey, but only it can Eat
+	int m_height;				// An integer that represents the height of the individual Monkey (called an instance of a class or a class object)
+	int m_weight;				// An integer that represents the weight of the individual Monkey
+	DateTime m_lastFed;			// When was this Monkey last fed?  DateTime is another class that holds the date and time
+};								// Closing curly brace and semicolon are required syntax
+---------------------------------------------------------------------------------------------------
+What's a class? (continued)
+
+Parts of a class
+In the C++ file (Monkey.cpp)
+#include "Monkey.h"	// The compiler splices in the lines from the header file; note no semicolon
+
+Monkey::Monkey(int hgt, int wt)	// The constructor looks a little redundant, but it is always <class>::<fucntion>
+	: m_height(hgt)								// Initialize height to the hgt argument value
+	, m_weight(wt)								// Initialize weight to the wt argument value
+{															// Open curly brace, required syntax
+	// Call the DateTime class's Init() public member function (using the dot operator)
+	// Pass in the result of calling a library fucntion
+	m_lastFed.Init(getCurrentDateTime());
+}											// Closing curly brace, required syntax
+
+Monkey::~Monkey()
+{
+	// Release any resources, close files, etc.
+}
+	
+void Monkey::Feed(Banana bn, int number)
+{
+	for (int i = 0; i < number; i++)	// Send the bananas one by one
+	{
+		Eat(bn);										// We can call our own private functions
+	}
+}
+
+void Monkey::Eat(Banana bn)
+{
+	m_height += 1;							// The Monkey grows (notice, no units, could be pounds or grams)
+	m_weight += 2;							// The Monkey gets fat
+}
+---------------------------------------------------------------------------------------------------
+Minutiae
+
+Keep in mind the difference:
+	= is for assignment			int a = 42;
+	== is for comparison		if (a == 42)
+The compiler does not care how much white space you use.  These 3 statements are the same:
+	int a = 42;
+	int      a                        =                   42;
+	int
+	a
+	=
+	42
+	;
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Jargon
+
+Code: the human readable instructions for the computer; many languages are available to code in, some graphical like Scratch
+ASCII: American Standard Code for Information Interchange
+Syntax: the grammer rules for a language, programming or otherwise (English and Spanish have syntax, too)
+Procedure, function, method, routine, sub-routine are all synonymous; they are a units of code that represent a processing step
+Argument and Paramter are synonymous; they are pieces of data that are provided to functions as inputs
+Scope: blocks of code delimited by curly braces {}; the lifetime of some variables is controlled by the scope
+Variables: symbols in the programs that hold values; the values can change (somewhat similar to variables in Algebra) 
+Signature: the return data type and argument list make up the signatur of a function 
+
+JIT: Just in time
+OOP: Object Oriented Programming
+Memory: a temporary storage space where the computer stores data (the ol' bit bucket)
+RAM: random access memory
+Data type: the computer can store data as integers, decimals (floating point), character codes, groups of these (structs and classes)
+Address: each set of bits in memory is numbered; the address is that number
+Pointer: a data type in C/C++ that holds a address; can be associated with a data type
+Bit: a contraction of the words binary digit; this is the smallest unit of computer storage; only two values possible: zero and one
+
+Hardware: what type of central processing unit (CPU) is the computer based on
+Platform (as in cross platform) means the computing hardware, e.g. x86 processors, ARM processors, 6502, Z80, etc.; in the early days, each computer was scratch built and different; each system had its own software
+Portability: how easy is it to change the source code to run on another hardware platform
+Microprocessor: a small computer, usually for an embedded system; often refeered to by bit size (8 bit, 16 but)
+Embedded system: a product with a computer within it; the computer is not the product; e.g. a robot or a smartphone
+---------------------------------------------------------------------------------------------------
+
+Next Topics
+Inheritance
+	Virtual functions
+	Abstract Base Classes
+	Abstractions
+	
+	
+	

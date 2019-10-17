@@ -1,0 +1,166 @@
+Team 1259 Paradigm Shift
+Scott Coursin, Code team mentor
+
+Code team excercise
+2019 Oct 17
+
+--------------------------------------------------------------------------------------------------------------------------------------
+New concept(s) introduced
+	Casting
+	Enumerations
+	Inheritance
+	Pointers (very briefly, more to come another day)
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Casting allows you to force a particular data type:
+
+short s = -42;			// 16 bit signed integer ranges from -32768 to +32767
+int i = (int)s;			// Putting a data type in parentheses is called casting to that data type
+float f = (float)i);	// Cast an integer to float
+unsinged short u = s;	// There is an implicit cast here, be careful: u == 65494 (65536 - 42)
+						// 16 bit unsigned integer ranges from 0 to 65535 (2^16 -1)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Enumerations are used to give sybolic names to numbered lists.  For instance, we could set up an enum for the days of the week:
+
+enum EDow
+{
+	  Sunday				// The enumerated value is 0 and increases by one for each symbol unless specified
+	, Monday				// 2
+	, Tuesday				// 3
+	, Wednesday				// 4
+	, Thursday	= Wednesday // Also 4, values can be the same (not useful in this case)
+	, Friday = 9			// 9 (not useful in this case)
+	, Saturday = 6			// 6 values do not have to be in order (not useful in this case)
+};
+
+Enums can be used as data types:
+
+int main()
+{
+	EDow dow = Tuesday;
+	
+	if (dow == Thursday)
+	{
+		// Go to robotics
+	}
+}
+
+There is a new extension to enums since C++11:
+enum class ESample : int
+{
+	  Zero
+	, One
+	, Two
+};
+
+ESample e = ESample::One;		// You must scope the enumerated value to the enum class name (ESample)
+int q = (int)e;					// ESample is a type, just like a class; you have to cast the value to the int type
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+One goal of object oriented programming (OOP) is to reduce the amount of code you have to write.
+When we model similar objects, we can share code and data through a base class.
+
+enum EFuelType
+{
+	  Unknown
+	, Gasoline
+	, Diesel
+	, Propane
+	, NaturalGas
+	, Hydrogen
+	, BatteryElectric	// Is it a fuel?
+};
+
+class Vehicle
+{
+public:
+	Vehicle(EFuelType fuel)
+		: m_fuel(fuel)
+	{
+	}
+	
+	~Vehicle();
+	
+	void Go()
+	{
+	}
+	
+	void Stop()
+	{
+	}
+	
+protected:
+	int m_numWheels;
+
+	void Refuel()
+	{
+	}
+	
+private:
+	EFuelType	m_fuel = Unknown;
+
+	void RefuelInternal()
+	{
+	}
+};
+
+class Car : public Vehicle
+{
+public:
+	Car()
+		: Vehicle(Gasoline)		// The base class c'tor takes an argument
+		, m_numWheels(4)
+	{
+	}
+}
+
+class Truck : public Vehicle
+{
+public:
+	Truck()
+		: Vehicle(Diesel)
+		, m_numWheels(18)
+	{
+		m_fuel = NaturalGas; // generates a compile error
+	}
+}
+
+We say that the Car and Truck classes inherit from Vehicle or are dervied from Vehicle
+Vehicle is the base class
+Car and Truck are derived classes
+The Car and Truck classes have m_numWheels and m_fuel member variables, but only the m_numWheels is accessible
+The Car and Truck classes and users of them can use the Go and Stop member fucntions (since they are public)
+The Car and Truck classes can use the Refuel member fucntion (since it is protected)
+The Car and Truck classes cannot use the RefuelInternal member fucntion (since it is private)
+There can be more than one level of inheritance (parent, grandparent, etc.)
+You can inherit from more than one class (advanced technique called multiple inheritance, not used as often as single inheritance)
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Casting can be used on class objects when they are related by inheritance:
+Car car;
+Vehicle v = car;		// Implicit cast
+Car* pC = (Car*)&v;		// Casting a base class pointer to the derived class
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Excercise
+	Traffic intersection simulation
+
+Details
+	Model a four way road intersection with traffic lights.
+	There is a single lane in each direction.
+	Cars arrive on the road 100 ft from the intersection and either have a green light and continue or stop and wait at a red light.
+	Arrival times are poisson distributed (I will explain); https://en.cppreference.com/w/cpp/numeric/random/poisson_distribution
+	
+Simplifications:
+	Cars move at a constant 25 mph and stop instantaeously, ignoring acceleration and deceleration.
+	Cars do not turn left or right at the intersection.
+
+Goal	
+	Test traffic light timing to determine the best traffic throughput.
+
+What class objects do we need?
+
