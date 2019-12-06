@@ -1,0 +1,29 @@
+Team 1259 Paradigm Shift
+2019 Dec 4
+
+Starting a robot program from scratch.
+The goal is to get the robot to move.
+We will us 2 or 3 "sleds" to test.
+
+1. Open VS Code
+2. Click the small WPI logo in the top right of your window
+3. Select the "Create a new project" (you might have to search for it by typing creat...)
+4. Select a "Project template", "Project Language" (C++), "A Project Base" (TimedRobot), "Project Folder" (C:\Users\???\Documents\VSCode_Workspace), "Project Name (SimpleDrive)"
+5. Click "Generate Project", select "Yes (Current Window)"
+6. If not in template, add Robot.h and Robot.cpp files
+7. Add library includes
+8. Add code (this will take a while; look at the links below; the mentors will help, but try to dig in to the available documents first)
+9. Get it to build (click the ellipsis button to the right of the WPI button and choose Build Robot Code; you can also use the command palette; Ctrl+Shift+P will open the command palette)
+10. Connect to a robot WiFi (networks are named like 1259_1 or 1259_5)
+11. Deploy your code to the robot (ellipsis button, choose Deploy Robot Code)
+12. Conenct the USB XBox controller
+13. Open the driver station
+14. Announce loudly "ENABLE" (I wanna hear it)
+15. Click the enable button
+16. If all went well, the robot should be drivable
+
+Helpful links
+https://wpilib.screenstepslive.com/s/currentCS/m/cpp
+https://wpilib.screenstepslive.com/s/currentCS/m/cpp/l/1027506-creating-a-robot-program
+https://wpilib.screenstepslive.com/s/currentCS/m/cpp/l/145319-creating-your-benchtop-test-program
+	
