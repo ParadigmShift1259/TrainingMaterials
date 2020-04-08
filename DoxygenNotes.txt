@@ -1,0 +1,132 @@
+Doxygen
+Team 1259 Paradigm Shift
+2020 Apr 7
+
+Links
+Download and install Doxygen and GraphViz from:
+http://www.doxygen.nl/download.html
+Direct link http://doxygen.nl/files/doxygen-1.8.17-setup.exe
+
+https://graphviz.gitlab.io/_pages/Download/Download_windows.html
+
+Doxygen is useful for documenting source code in C++ and other languages.
+With the optional GraphViz tool installed, some nice diagrams can be generated.
+You have seen the HTML output: the WPI library uses Doxygen to generate their documentation.
+
+Doxygen uses specially formatted comments to add descriptive information directly to the source code.
+For C++, prefer the triple slash /// or sameline comments //!< (the sameline is supposed to invoke pointing backwards to the documented element).
+See the documentation at http://www.doxygen.nl/manual/commands.html.
+
+There are a *lot* of commands, but you only need to learn a few to get started.
+The brief and details tags are the most used.
+/// \brief A brief description of the class, function or variable (a.k.a. \short).
+/// \details Lengthier text with details about how to use the code
+         what to watch out for
+- a list of things to know
+- thing 1
+- thing 2
+
+For member variables, the same line comment keeps the header file readable:
+    OperatorInputs *m_inputs; //!< The operator inputs (XBox controller); \ref FeederButtonsUsed
+Intake *m_intake; //!< The intake; provides it's ball count and takes command to to start "stuffing" balls through
+    WPI_TalonSRX *m_motor; //!< The feeder motor; run in % output mode, monitor encoder when pre-loading balls
+Timer m_timer; //!< If the encoder goal is not reached before timeout hits, go to idle state
+FeederState m_feederstate; //!< The state of the feeder; one of \see FeederState
+
+/// \anchor FeederButtonsUsed
+/// The operator intput controls used in Feeder are:
+/// - XBox LeftBumper Hold
+/// - XBox DPadLeft Toggle
+/// - XBox LeftBumper Hold
+/// - XBox DPadRight Toggle
+
+/// \brief Calculate teh sum of two numbers
+/// \details Addition is very tricky, so this function will help you avoid using your fingers and toes
+///          Use when you need to know what 2 + 2 is
+///
+/// \param[in] a The first addend
+/// \param[in] b The second addend
+/// \returns the sum of the two arguments
+int CalcSum(int a, int b);
+
+You can refer to a code item with \see (a.k.a. \sa; comes from see also)
+/// This class is used in conjuction with \see ClassFunctionOrVariableName
+
+Somewhere in the code you might like to jump to the documentation via a hyperlink
+/// \anchor AnIdentifierForAReference
+Elsewhere in the code
+/// The fritzenjammer is described in \ref AnIdentifierForAReference "Optional display text for the link"
+
+You can group a set of code items together if they share a high level description
+/// \name Accessors
+/// Private member const access fucntions
+/// @{
+/// int GetTicks();
+/// int GetTocks();
+/// int GetFrick();
+/// int GetFrack();
+/// int GetTheOther();
+/// @}
+
+/// \todo A reminder to do something; todo items from the entire codebase end up on one documentation page
+
+You can insert an image into the docs with the image tag.
+/// \image html IntakeStateDiagram.png "Caption text"
+
+The web pages open up to the main page, which can have any text you want.  We could use it to describe the intent of the code (what branch, is it test code, etc.).
+/// \mainpage
+
+You can run Doxygen against source code that does not have the special comments to get an overview of the structure.
+
+The best place to start is the class header files.
+Each class should have a descritption of its purpose.
+Then comment each member fucntion, starting with the public ones, then move on to the protected and private functions.
+From there, document each member variable (what does it keep track of, what units is it in, where is it used, etc.).
+
+Running the Doxywizard
+Start menu, Doxygen, Doxywizard
+Step 1 Specify working directory: use the src directory
+Step 2 Configure doxygen
+Wizard tab
+Topics
+Projects
+Project name: Team 1259 Paradigm Shift 2020 Robot
+Project synopsis: Post Duluth competion fixes
+Project version or ID: Duluth Fixes (taken from the Github brach name)
+Project logo: ParadigmShiftLogo.png
+
+Source code directory: . (that means this directory)
+Scan recursively: should be checked
+
+Destination directory: ./DoxygenOutput (make the directory first)
+Mode
+All entities radio button selected (this is the no Doxygen comments example; if you have comments you can choose Documented entities only)
+Include cross-referenced source code in the output checked (we have a small codebase)
+Optimize for C++ output radio button selected
+Output
+HTML checked
+With navigation panel radio button selected
+With search function checked
+Latex unchecked
+Man pages unchecked
+Rich text format (RTF) unchecked
+XML unchecked
+Diagrams
+Use dot tool from the GraphViz package radio button selected
+Check all types of diagram (we have a small codebase)
+Expert tab
+There are hundreds of options.  The critical one is to configure GraphViz.
+Topics
+Dot
+CLASS_DIAGRAMS checked
+DOT_FONTSIZE 14
+INTERACTIVE_SVG checked
+DOT_PATH C:/Program Files (x86)/Graphviz2.38/bin
+DOT_MULTI_TARGETS checked
+DOT_CLEANUP unchecked
+Run tab
+Click the Run doxygen button
+When Doxygen finishes, click the Show HTML output
+
+File menu, Save (use default file name Doxyfile with no extension)
+
