@@ -1,0 +1,36 @@
+
+
+cd <root of project folder>
+git init
+git remote add origin <url>
+(If remote needs to be changed): git set_url origin <url>
+git add --all
+git commit -am "Your commit message here"
+git push -u origin
+
+Whats happening:
+- Getting to the directory of the project folder
+- Initializing a repository in the project folder
+- Adding all changes to "staged" - See VSCode source control for how it works
+- Commit all staged changes with a commit message
+- Push to the origin
+
+
+Setting username and user email for committing and pushing:
+These two must be changed to change the commit
+git config --global user.name <name>
+git config --global user.email <email>
+
+In reality, only the first four  lines shown are necessary to get git connected to the online repository
+If the third or fourth line errors, try adding a change, staging it, committing it, and then trying again (Lines 5 and 6)
+After setting up your username and email and with the first four lines done, VS Code can then be used to stage, commit, and push
+
+Forcing Branches to another, destroying the previous
+
+Example: Pushing a branch to a really old master
+git push -f origin newbranch:master
+
+Pruning branches from origin that have been deleted from github:
+git fetch -p
+Removing all local branches except master and the one checked out:
+git branch | Select-String -NotMatch -Pattern "master" | %{ git branch -D $_.ToString().Trim() }
