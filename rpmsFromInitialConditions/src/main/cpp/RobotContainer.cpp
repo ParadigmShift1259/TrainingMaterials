@@ -6,9 +6,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/button/NetworkButton.h>
 
-RobotContainer::RobotContainer() 
-    : m_autonomousCommand(&m_subsystem)
-    , m_calculation()
+RobotContainer::RobotContainer() : m_flywheelSubsystem()
 {
   // Initialize all of your commands and subsystems here
 
@@ -23,16 +21,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_primaryController, (int)frc::XboxController::Button::kA).WhenPressed(
     frc2::InstantCommand(
       [this] {
-        m_calculation.GetInitRPMS();
-        // frc::SmartDashboard::PutNumber("SecondaryVel", vel.to<double>());
+        m_flywheelSubsystem.StartFiring();
       },
       {}
     )
   );
 
-}
-
-frc2::Command* RobotContainer::GetAutonomousCommand() {
-  // An example command will be run in autonomous
-  return &m_autonomousCommand;
 }

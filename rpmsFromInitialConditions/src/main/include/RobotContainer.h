@@ -12,9 +12,7 @@
 #include <frc2/command/RunCommand.h>
 
 
-#include "commands/ExampleCommand.h"
-#include "subsystems/ExampleSubsystem.h"
-#include "Calculations.h"
+#include "subsystems/FlywheelSubsystem.h"
 #include "Constants.h"
 
 /**
@@ -28,13 +26,9 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  frc2::Command* GetAutonomousCommand();
-
  private:
   // The robot's subsystems and commands are defined here...
-  ExampleSubsystem m_subsystem;
-  ExampleCommand m_autonomousCommand;
-  Calculations m_calculation;
+  FlywheelSubsystem m_flywheelSubsystem;
 
   frc::XboxController m_primaryController{kPrimaryControllerPort};
 

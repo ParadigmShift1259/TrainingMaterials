@@ -32,6 +32,11 @@ constexpr auto linearRegConst = units::radians_per_second_t (12.7);
 
 constexpr int kPrimaryControllerPort = 0;
 
+constexpr int kMotorPort = 20;
+constexpr double kRampRate = 1.0;
+
+constexpr double kflywheelGearRatio = 30 / 20;
+
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants.  This should not be used for any other
