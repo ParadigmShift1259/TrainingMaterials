@@ -13,6 +13,7 @@
 
 
 #include "subsystems/FlywheelSubsystem.h"
+#include "Calculations.h"
 #include "Constants.h"
 
 /**
@@ -29,6 +30,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   FlywheelSubsystem m_flywheelSubsystem;
+  Calculations m_calculation;
 
   frc::XboxController m_primaryController{kPrimaryControllerPort};
 

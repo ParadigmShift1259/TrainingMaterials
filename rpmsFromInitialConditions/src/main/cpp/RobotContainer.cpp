@@ -21,10 +21,28 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_primaryController, (int)frc::XboxController::Button::kA).WhenPressed(
     frc2::InstantCommand(
       [this] {
-        m_flywheelSubsystem.StartFiring();
+        double setpoint = m_calculation.GetInitRPMS().to<double>() / FlywheelConstants::kGearRatio;
+        m_flywheelSubsystem.SetRPM(setpoint);
       },
       {}
     )
   );
 
+  frc2::JoystickButton(&m_primaryController, (int)frc::XboxController::Button::kX).WhenPressed(
+      frc2::InstantCommand(    
+          [this] { 
+              m_flywheelSubsystem.SetRPM(m_flywheelSubsystem.GetRPM() + 10.0);
+            },
+          {&m_flywheelSubsystem}
+      )
+  );
+
+  frc2::JoystickButton(&m_primaryController, (int)frc::XboxController::Button::kY).WhenPressed(
+      frc2::InstantCommand(    
+          [this] { 
+              m_flywheelSubsystem.SetRPM(m_flywheelSubsystem.GetRPM() - 10.0);
+            },
+          {&m_flywheelSubsystem}
+      )
+  );
 }
