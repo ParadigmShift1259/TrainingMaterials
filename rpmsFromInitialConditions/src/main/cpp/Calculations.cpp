@@ -86,6 +86,7 @@ revolutions_per_minute_t Calculations::GetInitRPMS() {
   auto bValue = 2 * flywheelRotInertia * linearRegConst * (linearRegSlope + linearRegSlope * rotInertiaRatio - rotInertiaRatio);
   auto cValue = flywheelRotInertia * linearRegConst / radian_t (1.0) * linearRegConst / radian_t (1.0) * (rotInertiaRatio + 1.0) + cargoMass * m_velInit * m_velInit;
   
+
   m_rotVelInit = QuadraticFormula(aValue.to<double>(), bValue.to<double>(), cValue.to<double>(), (bool)true);
   m_rpmInit = m_rotVelInit;
 

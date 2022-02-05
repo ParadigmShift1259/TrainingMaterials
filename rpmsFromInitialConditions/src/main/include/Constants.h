@@ -15,9 +15,9 @@
 
 #pragma once
 
-constexpr auto gravity = units::meters_per_second_squared_t(32.0);
+constexpr auto gravity = units::meters_per_second_squared_t(9.81);
 
-constexpr units::kilogram_t flywheelMass = units::pound_t(5.0);
+constexpr units::kilogram_t flywheelMass = units::pound_t(4.7);
 constexpr units::meter_t flywheelRadius = 2.0_in;
 constexpr auto flywheelRotInertia =  0.5 * flywheelMass * flywheelRadius * flywheelRadius;
 
@@ -82,7 +82,7 @@ namespace FlywheelConstants
     constexpr double kTrenchRPM = 3000;
 
     /// One turn of the Neo is 1.33 turns of the Flywheel
-    constexpr double kGearRatio = 4 / 3;
+    constexpr double kGearRatio = 4.0 / 3.0;
 }
 
 /**

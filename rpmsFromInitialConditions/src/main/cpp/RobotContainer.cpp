@@ -22,6 +22,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::InstantCommand(
       [this] {
         double setpoint = m_calculation.GetInitRPMS().to<double>() / FlywheelConstants::kGearRatio;
+        frc::SmartDashboard::PutNumber("InitSetPoint", setpoint);
         m_flywheelSubsystem.SetRPM(setpoint);
       },
       {}
