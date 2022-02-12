@@ -82,7 +82,7 @@ namespace FlywheelConstants
     constexpr double kTrenchRPM = 3000;
 
     /// One turn of the Neo is 1.33 turns of the Flywheel
-    constexpr double kGearRatio = 4.0 / 3.0;
+    constexpr double kGearRatio = 3.0 / 2.0;
 }
 
 /**

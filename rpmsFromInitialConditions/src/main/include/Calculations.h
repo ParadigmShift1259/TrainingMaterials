@@ -3,6 +3,7 @@
 #include <units/velocity.h>
 #include <units/angle.h>
 #include <units/angular_velocity.h>
+#include <networktables/NetworkTableEntry.h>
 
 using namespace units;
 
@@ -18,6 +19,8 @@ class Calculations {
   auto GetInitVelWithAngle();
   revolutions_per_minute_t GetInitRPMS();
   radians_per_second_t QuadraticFormula(double a, double b, double c, bool subtract);
+
+  void CalculateAll();
 
  private:
   
@@ -41,4 +44,16 @@ class Calculations {
 
   radians_per_second_t m_rotVelInit = radians_per_second_t(0.0);
   revolutions_per_minute_t m_rpmInit = revolutions_per_minute_t(0.0);
+
+  nt::NetworkTableEntry m_heightAboveHubEntry;
+  nt::NetworkTableEntry m_heightRobotEntry;
+  nt::NetworkTableEntry m_heightTargetEntry;
+  nt::NetworkTableEntry m_xFloorDistanceEntry;
+  nt::NetworkTableEntry m_xTargetDistanceEntry;
+
+  nt::NetworkTableEntry m_initVelEntry;
+  nt::NetworkTableEntry m_initAngleEntry;
+  nt::NetworkTableEntry m_initRpmEntry;
+  nt::NetworkTableEntry m_setpointEntry;
+
 };
