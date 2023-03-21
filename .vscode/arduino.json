@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:mini",
+    "configuration": "cpu=atmega328",
+    "sketch": "PIDTuner.ino",
+    "port": "COM4"
+}
